@@ -1,0 +1,44 @@
+{
+  "id": "/",
+  "name": "MEV Bot Studio & Blockchain Engine",
+  "short_name": "MEV Studio",
+  "description": "Enterprise-grade MEV bot system, real RPC scanner, EVM simulation engine, dual-wallet executor, and smart contract deployment suite for Android.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["finance", "utilities", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Live Scanner",
+      "url": "/#scanner",
+      "description": "Real-time DEX Pool Reserves & Mempool Scanner"
+    },
+    {
+      "name": "EVM Simulator",
+      "url": "/#simulator",
+      "description": "Atomic Swap & Bundle Simulation"
+    },
+    {
+      "name": "Executor Wallet",
+      "url": "/#wallets",
+      "description": "Dual-Wallet MEV & Profit Management"
+    }
+  ]
+}

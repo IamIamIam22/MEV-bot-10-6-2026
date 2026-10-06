@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="100%" stop-color="#161e31" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#1e293b" stroke-width="6" stroke-dasharray="12 12" />
+  <!-- Hexagon Outer -->
+  <polygon points="256,96 392,176 392,336 256,416 120,336 120,176" fill="none" stroke="url(#accentGrad)" stroke-width="14" stroke-linejoin="round" />
+  <!-- Inner Node Links -->
+  <circle cx="256" cy="96" r="14" fill="#06b6d4" />
+  <circle cx="392" cy="176" r="14" fill="#3b82f6" />
+  <circle cx="392" cy="336" r="14" fill="#8b5cf6" />
+  <circle cx="256" cy="416" r="14" fill="#ec4899" />
+  <circle cx="120" cy="336" r="14" fill="#10b981" />
+  <circle cx="120" cy="176" r="14" fill="#eab308" />
+  <!-- Lightning MEV Center Bolt -->
+  <path d="M276 170 L216 266 L264 266 L236 342 L308 246 L260 246 Z" fill="url(#glowGrad)" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
+</svg>

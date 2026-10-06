@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MEV Bot Studio & Blockchain Engine</title>
+    <meta name="description" content="Enterprise-grade MEV bot system, real RPC scanner, EVM simulation engine, dual-wallet executor, and smart contract deployment suite for Android and Web." />
+    <meta property="og:title" content="MEV Bot Studio & Blockchain Engine" />
+    <meta property="og:description" content="Enterprise-grade MEV bot system, real RPC scanner, EVM simulation engine, dual-wallet executor, and smart contract deployment suite for Android and Web." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#090d16" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MEV Studio" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <script>
+      // Gracefully mock Vite HMR WebSocket in AI Studio cloud iframe environment
+      (function() {
+        var OriginalWebSocket = window.WebSocket;
+        if (OriginalWebSocket) {
+          window.WebSocket = function(url, protocols) {
+            var isViteHmr = false;
+            try {
+              if (protocols === 'vite-hmr' || (Array.isArray(protocols) && protocols.indexOf('vite-hmr') !== -1)) {
+                isViteHmr = true;
+              } else if (typeof url === 'string' && (url.indexOf('vite-hmr') !== -1 || url.indexOf('@vite') !== -1)) {
+                isViteHmr = true;
+              }
+            } catch(e) {}
+
+            if (isViteHmr) {
+              var listeners = {};
+              var stub = {
+                url: url,
+                readyState: 1, // WebSocket.OPEN
+                bufferedAmount: 0,
+                protocol: 'vite-hmr',
+                extensions: '',
+                binaryType: 'blob',
+                send: function() {},
+                close: function() {
+                  stub.readyState = 3;
+                },
+                addEventListener: function(type, fn) {
+                  if (!listeners[type]) listeners[type] = [];
+                  listeners[type].push(fn);
+                  if (type === 'open') {
+                    setTimeout(function() {
+                      try { fn({ type: 'open' }); } catch(err) {}
+                    }, 0);
+                  }
+                },
+                removeEventListener: function(type, fn) {
+                  if (listeners[type]) {
+                    listeners[type] = listeners[type].filter(function(f) { return f !== fn; });
+                  }
+                },
+                dispatchEvent: function() { return true; }
+              };
+              return stub;
+            }
+            return new OriginalWebSocket(url, protocols);
+          };
+          window.WebSocket.prototype = OriginalWebSocket.prototype;
+          window.WebSocket.CONNECTING = 0;
+          window.WebSocket.OPEN = 1;
+          window.WebSocket.CLOSING = 2;
+          window.WebSocket.CLOSED = 3;
+        }
+
+        // Global suppression for any WebSocket or @vite/client errors
+        var origError = console.error;
+        console.error = function() {
+          for (var i = 0; i < arguments.length; i++) {
+            var arg = arguments[i];
+            var str = typeof arg === 'string' ? arg : (arg && (arg.message || arg.stack || String(arg))) || '';
+            if (
+              str.indexOf('WebSocket closed without opened') !== -1 ||
+              str.indexOf('failed to connect to websocket') !== -1 ||
+              str.indexOf('@vite/client') !== -1 ||
+              str.indexOf('vite-hmr') !== -1
+            ) {
+              return;
+            }
+          }
+          origError.apply(console, arguments);
+        };
+
+        window.addEventListener('error', function(e) {
+          var msg = (e && (e.message || (e.error && (e.error.message || e.error.stack)))) || '';
+          if (
+            msg.indexOf('WebSocket closed without opened') !== -1 ||
+            msg.indexOf('failed to connect to websocket') !== -1 ||
+            msg.indexOf('@vite/client') !== -1 ||
+            msg.indexOf('vite-hmr') !== -1
+          ) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+            return false;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = e && e.reason;
+          var msg = (reason && (reason.message || reason.stack || String(reason))) || '';
+          if (
+            msg.indexOf('WebSocket closed without opened') !== -1 ||
+            msg.indexOf('failed to connect to websocket') !== -1 ||
+            msg.indexOf('@vite/client') !== -1 ||
+            msg.indexOf('vite-hmr') !== -1
+          ) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+            return false;
+          }
+        }, true);
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "ContractRecord": {
+      "title": "ContractRecord",
+      "description": "Smart contracts crafted, scanned, or executed on-chain by the MEV engine",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique contract identifier" },
+        "name": { "type": "string", "description": "Contract name" },
+        "targetNetwork": { "type": "string", "description": "Blockchain network" },
+        "address": { "type": "string", "description": "Deployed contract address" },
+        "abi": { "type": "string", "description": "Contract ABI specification" },
+        "bytecode": { "type": "string", "description": "Compiled contract bytecode" },
+        "sourceCode": { "type": "string", "description": "Solidity source code" },
+        "strategy": { "type": "string", "description": "Arbitrage or liquidation strategy" },
+        "scrapedProfitUSD": { "type": "number", "description": "Historical scraped profit generated in USD" },
+        "txHash": { "type": "string", "description": "Deployment transaction hash" },
+        "creatorAddress": { "type": "string", "description": "Wallet that deployed or crafted contract" },
+        "status": { "type": "string", "description": "DEPLOYED, SCRAPED, or READY" },
+        "createdAt": { "type": "number", "description": "Creation timestamp" }
+      },
+      "required": ["id", "name", "targetNetwork", "bytecode", "createdAt"]
+    },
+    "TransactionRecord": {
+      "title": "TransactionRecord",
+      "description": "Real on-chain blockchain transaction receipts executed by user or MEV engine",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Transaction identifier" },
+        "txHash": { "type": "string", "description": "Real transaction hash on blockchain" },
+        "networkName": { "type": "string", "description": "Network name" },
+        "chainId": { "type": "number", "description": "EVM Chain ID" },
+        "from": { "type": "string", "description": "Sender wallet address" },
+        "to": { "type": "string", "description": "Recipient or contract address" },
+        "valueETH": { "type": "string", "description": "Value transferred in ETH" },
+        "gasUsed": { "type": "string", "description": "Gas consumed by transaction" },
+        "blockNumber": { "type": "number", "description": "Block number where transaction was mined" },
+        "profitUSD": { "type": "number", "description": "Arbitrage or sweep profit in USD" },
+        "status": { "type": "string", "description": "CONFIRMED or FAILED" },
+        "explorerUrl": { "type": "string", "description": "Etherscan or explorer link" },
+        "timestamp": { "type": "number", "description": "Timestamp in milliseconds" }
+      },
+      "required": ["id", "txHash", "networkName", "from", "status", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/contracts/{contractId}": {
+      "schema": "ContractRecord",
+      "description": "Platform smart contracts crafted, deployed, and scraped for profit"
+    },
+    "/transactions/{txId}": {
+      "schema": "TransactionRecord",
+      "description": "Real on-chain transaction execution log and receipts"
+    }
+  }
+}

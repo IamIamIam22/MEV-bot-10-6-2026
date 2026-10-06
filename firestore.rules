@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Smart Contracts repository (scraped, deployed, crafted)
+    match /contracts/{contractId} {
+      allow read: if true;
+      allow write: if request.resource.data.id is string
+                   && request.resource.data.name is string
+                   && request.resource.data.name.size() <= 128
+                   && request.resource.data.targetNetwork is string
+                   && request.resource.data.bytecode is string;
+    }
+
+    // Real on-chain transaction records
+    match /transactions/{txId} {
+      allow read: if true;
+      allow write: if request.resource.data.id is string
+                   && request.resource.data.txHash is string
+                   && request.resource.data.txHash.size() <= 128
+                   && request.resource.data.networkName is string;
+    }
+  }
+}

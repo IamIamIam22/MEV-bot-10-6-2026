@@ -1,0 +1,6 @@
+{
+  "name": "MEV Bot Studio & Blockchain Engine",
+  "description": "Enterprise-grade MEV bot system, real RPC scanner, EVM simulation engine, dual-wallet executor, and smart contract deployment suite for Android and Web.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
